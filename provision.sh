@@ -190,6 +190,7 @@ echo "=================="
 echo
 
 echo "export NAT_ID=$NAT_ID" >>vars.sh
+sleep 30
 
 echo "STEP 11.1..."
 echo
@@ -356,7 +357,7 @@ echo "Define security group rule to allow HTTP..."
 SG_AUTH_HTTP_VPC=$(
   aws ec2 authorize-security-group-ingress \
     --group-id $SG_VPC_ID \
-    --port 80 \
+    --protocol tcp --port 80 \
     --cidr $VPC_CIDR \
     --tag-specification 'ResourceType=security-group-rule,Tags=[{Key=Name,Value=altschool-project-sgr-http-vpc}]'
 )
@@ -365,7 +366,7 @@ echo "Define security group rule to allow HTTPS..."
 SG_AUTH_HTTPS_VPC=$(
   aws ec2 authorize-security-group-ingress \
     --group-id $SG_VPC_ID \
-    --port 443 \
+    --protocol tcp --port 443 \
     --cidr $VPC_CIDR \
     --tag-specification 'ResourceType=security-group-rule,Tags=[{Key=Name,Value=altschool-project-sgr-https-vpc}]'
 )
@@ -646,7 +647,7 @@ echo
 echo
 echo '1. VERIFY THAT ALL SERVICES ARE RUNNING ON THE AWS CONSOLE'
 echo '2. NAVIGATE INTO "ansible/" DIRECTORY'
-echo "3. RUN THE PLAYBOOK TO CONFIGURE YOUR BASTION
+echo '3. RUN THE PLAYBOOK TO CONFIGURE YOUR BASTION'
 echo "   ansible-playbook bastion-playbook.yml --private-key ../$KEY_NAME.pem -i hosts"
 echo '4. AFTER THAT RUN THE ANSIBLE PLAYBOOK TO CONFIGURE THE BASTION'
 echo '5. OBTAIN THE PUBLIC IP OF THE BASTION FROM THE "hosts" file or from the "vars.sh" file'
@@ -656,3 +657,5 @@ echo '7. NAVIGATE TO THE "ansible" DIRECTORY ON THE UBUNTU USER DIRECTORY'
 echo '   cd ansible/'
 echo '8. RUN ANOTHER PLAYBOOK TO CONFIGURE THE REPLICAS'
 echo "   ansible-playbook replica-playbook.yml --private-key ../$KEY_NAME.pem -i hosts"
+echo "9. Check your load balancer's DNSName"
+echo "   ${LB_DNSName}"
