@@ -376,8 +376,8 @@ echo $SG_AUTH_HTTP_VPC | jq -r
 echo HTTPS Rule
 echo $SG_AUTH_HTTPS_VPC | jq -r
 SGR_SSH_VPC_RULE_ID=$(echo $SG_AUTH_SSH_VPC | jq -r .SecurityGroupRules[0].SecurityGroupRuleId)
-SGR_HTTP_VPC_RULE_ID=$(echo $SG_AUTH_HTTP_VPC | jq -r .SecurityGroupRules[1].SecurityGroupRuleId)
-SGR_HTTPS_VPC_RULE_ID=$(echo $SG_AUTH_HTTPS_VPC | jq -r .SecurityGroupRules[2].SecurityGroupRuleId)
+SGR_HTTP_VPC_RULE_ID=$(echo $SG_AUTH_HTTP_VPC | jq -r .SecurityGroupRules[0].SecurityGroupRuleId)
+SGR_HTTPS_VPC_RULE_ID=$(echo $SG_AUTH_HTTPS_VPC | jq -r .SecurityGroupRules[0].SecurityGroupRuleId)
 echo 'sgr-ssh-vpc-rule-id = ' $SGR_SSH_VPC_RULE_ID
 echo 'sgr-http-vpc-rule-id = ' $SGR_HTTP_VPC_RULE_ID
 echo 'sgr-https-vpc-rule-id = ' $SGR_HTTPS_VPC_RULE_ID
